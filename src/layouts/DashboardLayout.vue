@@ -8,14 +8,14 @@
       </v-container>
     </v-content>
 
-    <DashboardFooter></DashboardFooter>
+    <!-- <DashboardFooter></DashboardFooter> -->
   </v-app>
 </template>
 
 <script>
 import DashboardHeader from "./header/DashboardHeader";
 import DashboardSidebar from "./sidebar/DashboardSidebar";
-import DashboardFooter from "./footer/DashboardFooter";
+//import DashboardFooter from "./footer/DashboardFooter";
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "DashboardLayout",
@@ -23,7 +23,7 @@ export default {
   components: {
     DashboardHeader,
     DashboardSidebar,
-    DashboardFooter,
+    //    DashboardFooter,
   },
 
   props: {

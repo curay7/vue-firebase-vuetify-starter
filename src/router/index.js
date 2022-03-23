@@ -80,7 +80,13 @@ router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   console.log(requiresAuth);
   console.log(await firebaseApp.getCurrentUser());
-  if (requiresAuth && !(await firebaseApp.getCurrentUser())) {
+
+  if (
+    (to.path === "/login" || to.path === "/register") &&
+    (await firebaseApp.getCurrentUser())
+  ) {
+    next("/");
+  } else if (requiresAuth && !(await firebaseApp.getCurrentUser())) {
     next("login");
   } else {
     next();

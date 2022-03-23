@@ -31,14 +31,6 @@
                 type="password"
               />
               <v-row>
-                <v-col cols="12" sm="7">
-                  <v-checkbox
-                    v-model="checkbox"
-                    :rules="[(v) => !!v || 'You must agree to continue!']"
-                    label="Do you agree?"
-                    required
-                  ></v-checkbox>
-                </v-col>
                 <v-col cols="12" sm="5">
                   <span class="caption blue--text">Forgot password</span>
                 </v-col>
@@ -94,7 +86,6 @@ export default {
       email: "",
       password: "",
     },
-    checkbox: false,
     valid: false,
 
     emailRules: [
@@ -112,6 +103,7 @@ export default {
       var valid = await this.$refs.form.validate();
       if (valid) {
         console.log("stated");
+        //yel leonas
         // firebase
         //   .auth()
         //   .signInWithEmailAndPassword(this.user.email, this.user.password)

@@ -2,7 +2,6 @@
   <v-navigation-drawer
     v-model="Sidebar_drawer"
     :dark="SidebarColor !== 'white'"
-    :color="blue"
     mobile-break-point="960"
     clipped
     :right="$vuetify.rtl"
@@ -42,6 +41,16 @@
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+
+      <v-list-item link @click="logout">
+        <v-list-item-icon>
+          <v-icon> mdi-logout</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>Log Out</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <!---Sidebar Items -->
     </v-list>
   </v-navigation-drawer>
@@ -49,6 +58,7 @@
 
 <script>
 import { mapState } from "vuex";
+import firebase from "../../firebase";
 
 export default {
   name: "DashboardSidebar",
@@ -108,7 +118,21 @@ export default {
     },
   },
 
-  methods: {},
+  methods: {
+    async logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.replace({
+            name: "login",
+          });
+        })
+        .catch(() => {
+          alert("error");
+        });
+    },
+  },
 };
 </script>
 <style lang="scss">
