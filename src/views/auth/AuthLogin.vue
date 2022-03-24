@@ -78,7 +78,9 @@
 </template>
 
 <script>
-import firebaseApp from "../../firebase";
+// import firebaseApp from "../../firebase";
+import { mapActions, mapState } from "vuex";
+
 export default {
   data: () => ({
     step: 1,
@@ -102,63 +104,56 @@ export default {
     async validate() {
       var valid = await this.$refs.form.validate();
       if (valid) {
-        console.log("stated");
-        //yel leonas
-        // firebase
-        //   .auth()
-        //   .signInWithEmailAndPassword(this.user.email, this.user.password)
-        //   .then(() => {
-        //     this.$router.push("/");
-        //   })
-        //   .catch((error) => {
-        //     alert(error.message);
-        //   });
-        try {
-          console.log(
-            firebaseApp
-              .auth()
-              .signInWithEmailAndPassword(this.user.email, this.user.password)
-          );
-          await firebaseApp
-            .auth()
-            .signInWithEmailAndPassword(this.user.email, this.user.password);
-
-          const Toast = await this.$swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", this.$swal.stopTimer);
-              toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-            },
-          });
-
-          Toast.fire({
-            icon: "success",
-            title: "Signed in successfully",
-          });
-          this.$router.push("/");
-        } catch (e) {
-          if (e.code == "auth/user-not-found") {
-            this.$swal.fire({
-              icon: "error",
-              title: "Invalid Credential",
-              text: "Please enter a correct email and password. ",
+        let payload = {
+          email: this.user.email,
+          password: this.user.password,
+        };
+        this.signInUser(payload)
+          .then(() => {
+            const Toast = this.$swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", this.$swal.stopTimer);
+                toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+              },
             });
-          }
-          if (e.code == "auth/wrong-password") {
-            this.$swal.fire({
-              icon: "info",
-              title: "Password was incorrect",
-              text: "Please enter a correct password. ",
+
+            Toast.fire({
+              icon: "success",
+              title: "Signed in successfully",
             });
-          }
-        }
+            this.$router.push("/");
+          })
+          .catch((e) => {
+            console.log("Find error");
+            console.log(e);
+            if (e == "auth/user-not-found") {
+              this.$swal.fire({
+                icon: "error",
+                title: "Invalid Credential",
+                text: "Please enter a correct email and password. ",
+              });
+            }
+            if (e == "auth/wrong-password") {
+              this.$swal.fire({
+                icon: "info",
+                title: "Password was incorrect",
+                text: "Please enter a correct password. ",
+              });
+            }
+          });
       }
     },
+
+    ...mapActions(["createNewUserAccount", "signInUser"]),
   },
+  computed: mapState({
+    loginLoading: (state) => state.loadings.login,
+  }),
 };
 </script>
 <style scoped>

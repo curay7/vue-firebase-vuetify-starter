@@ -24,7 +24,7 @@
             first onboarding experiance
           </h4>
         </v-container>
-        <v-row align="left" justify="center">
+        <v-row justify="center">
           <v-col cols="12" sm="8">
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-row>
@@ -36,7 +36,7 @@
                     color="blue"
                     autocomplete="false"
                     class="mt-4"
-                    v-model="firstname"
+                    v-model="user.firstname"
                     :rules="nameRules"
                     required
                   />
@@ -49,14 +49,14 @@
                     color="blue"
                     autocomplete="false"
                     class="mt-4"
-                    v-model="lastname"
+                    v-model="user.lastname"
                     :rules="nameRules"
                     required
                   />
                 </v-col>
               </v-row>
               <v-text-field
-                v-model="email"
+                v-model="user.email"
                 :rules="emailRules"
                 label="E-mail"
                 required
@@ -66,7 +66,7 @@
               ></v-text-field>
 
               <v-text-field
-                v-model="password"
+                v-model="user.password"
                 label="Password"
                 outlined
                 dense
@@ -76,7 +76,7 @@
                 :rules="passwordRules"
               />
               <v-text-field
-                v-model="passwordConfirm"
+                v-model="user.passwordConfirm"
                 label="Confirm Password"
                 :rules="confirmPasswordRules.concat(passwordConfirmationRule)"
                 required
@@ -89,7 +89,7 @@
               <v-row>
                 <v-col cols="12" sm="7">
                   <v-checkbox
-                    v-model="checkbox"
+                    v-model="user.checkbox"
                     :rules="[(v) => !!v || 'You must agree to continue!']"
                     label="Do you agree?"
                     required
@@ -128,17 +128,21 @@
 </template>
 
 <script>
-import firebaseApp from "firebase";
+//import firebaseApp from "firebase";
+import { mapActions, mapState } from "vuex";
+
 export default {
   data: () => ({
     valid: false,
     step: 1,
-    lastname: "",
-    firstname: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
-    checkbox: false,
+    user: {
+      lastname: "",
+      firstname: "",
+      email: "",
+      password: "",
+      passwordConfirm: "",
+      checkbox: false,
+    },
 
     //Roles
     nameRules: [(v) => !!v || "Name is required"],
@@ -159,38 +163,76 @@ export default {
       var valid = this.$refs.form.validate();
       if (valid) {
         console.log("strted");
-        try {
-          firebaseApp
-            .auth()
-            .createUserWithEmailAndPassword(this.email, this.password);
-          const Toast = await this.$swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", this.$swal.stopTimer);
-              toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-            },
-          });
+        let payload = {
+          email: this.user.email,
+          password: this.user.password,
+        };
+        this.createNewUserAccount(payload)
+          .then(() => {
+            const Toast = this.$swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", this.$swal.stopTimer);
+                toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+              },
+            });
 
-          Toast.fire({
-            icon: "success",
-            title: "Signed in successfully",
+            Toast.fire({
+              icon: "success",
+              title: "Signed in successfully",
+            });
+            this.$router.push("/");
+          })
+          .catch((e) => {
+            if (e == "auth/email-already-in-use") {
+              this.$swal.fire({
+                icon: "error",
+                title: "Invalid Email",
+                text: "Email is already in use",
+              });
+            }
+            console.log(e);
           });
-          this.$router.push("/");
-        } catch (e) {
-          console.log(e);
-        }
+        // try {
+        //   firebaseApp
+        //     .auth()
+        //     .createUserWithEmailAndPassword(this.email, this.password);
+        //   const Toast = await this.$swal.mixin({
+        //     toast: true,
+        //     position: "top-end",
+        //     showConfirmButton: false,
+        //     timer: 3000,
+        //     timerProgressBar: true,
+        //     didOpen: (toast) => {
+        //       toast.addEventListener("mouseenter", this.$swal.stopTimer);
+        //       toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        //     },
+        //   });
+
+        //   Toast.fire({
+        //     icon: "success",
+        //     title: "Signed in successfully",
+        //   });
+        //   this.$router.push("/");
+        // } catch (e) {
+        //   console.log(e);
+        // }
       }
     },
+    ...mapActions(["createNewUserAccount", "signInUser"]),
   },
   computed: {
     passwordConfirmationRule() {
       return () =>
         this.password === this.passwordConfirm || "Password must match";
     },
+    ...mapState({
+      loginLoading: (state) => state.loadings.login,
+    }),
   },
 };
 </script>

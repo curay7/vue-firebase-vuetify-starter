@@ -120,16 +120,28 @@ export default {
 
   methods: {
     async logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.replace({
-            name: "login",
-          });
+      this.$swal
+        .fire({
+          title: "Are you sure?",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Log Out",
         })
-        .catch(() => {
-          alert("error");
+        .then((result) => {
+          if (result.isConfirmed) {
+            firebase
+              .auth()
+              .signOut()
+              .then(() => {
+                this.$router.replace({
+                  name: "login",
+                });
+              })
+              .catch(() => {
+                alert("error");
+              });
+          }
         });
     },
   },

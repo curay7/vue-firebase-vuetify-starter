@@ -37,7 +37,11 @@ const routes = [
         path: "pages/tables-simple",
         component: () => import("@/views/dashboard/DashboardTableSimple"),
       },
-
+      {
+        name: "DashboardTest",
+        path: "dashboard/test",
+        component: () => import("@/views/dashboard/DashboardTest"),
+      },
       {
         name: "Dashboard",
         path: "dashboard/home",
