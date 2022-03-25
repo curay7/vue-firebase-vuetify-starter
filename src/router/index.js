@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/dashboard/HomeView.vue";
+import HomeView from "../views/dashboard/HomeView/index.vue";
 import Login from "../views/auth/AuthLogin.vue";
 import Register from "../views/auth/AuthRegister.vue";
 import firebaseApp from "../firebase";
@@ -39,7 +39,7 @@ const routes = [
       },
       {
         name: "DashboardTest",
-        path: "dashboard/test",
+        path: "pages/test",
         component: () => import("@/views/dashboard/DashboardTest"),
       },
       {

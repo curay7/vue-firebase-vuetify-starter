@@ -158,92 +158,12 @@
             </div>
           </v-card-text>
         </v-card>
-        <v-card class="mb-7">
-          <v-card-text class="pa-5">
-            <h3
-              class="title blue-grey--text text--darken-2 font-weight-regular mb-4"
-            >
-              Task
-            </h3>
-            <v-text-field
-              v-model="task"
-              label="What are you working on?"
-              filled
-              @keydown.enter="create"
-            >
-              <!-- <v-fade-transition v-slot:append> -->
-              <v-fade-transition>
-                <v-icon v-if="task" @click="create">add_circle</v-icon>
-              </v-fade-transition>
-            </v-text-field>
-
-            <h2 class="font-weight-medium success--text text-center">
-              Tasks:&nbsp;
-              <v-fade-transition leave-absolute>
-                <span :key="`tasks-${tasks.length}`">{{ tasks.length }}</span>
-              </v-fade-transition>
-            </h2>
-
-            <v-divider class="mt-4"></v-divider>
-
-            <v-row class="my-1" align="center">
-              <span class="mx-4 info--text"
-                >Remaining: {{ remainingTasks }}</span
-              >
-
-              <v-divider vertical></v-divider>
-
-              <span class="mx-4 success--text"
-                >Completed: {{ completedTasks }}</span
-              >
-
-              <v-spacer></v-spacer>
-
-              <v-progress-circular
-                :value="progress"
-                class="mr-2"
-              ></v-progress-circular>
-            </v-row>
-
-            <v-divider class="mb-4"></v-divider>
-
-            <v-card v-if="tasks.length > 0">
-              <v-slide-y-transition class="py-0" group>
-                <template v-for="(task, i) in tasks">
-                  <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
-
-                  <v-list-item :key="`${i}-${task.text}`">
-                    <v-list-item-action>
-                      <v-checkbox
-                        v-model="task.done"
-                        :color="(task.done && 'grey') || 'primary'"
-                      >
-                        <template v-slot:label>
-                          <div
-                            :class="
-                              (task.done && 'grey--text') ||
-                              'blue-grey--text text--darken-2'
-                            "
-                            class="ml-4 text-truncate"
-                            v-text="task.text"
-                          ></div>
-                        </template>
-                      </v-checkbox>
-                    </v-list-item-action>
-
-                    <v-spacer></v-spacer>
-
-                    <v-scroll-x-transition>
-                      <v-icon v-if="task.done" color="success"
-                        >mdi-check</v-icon
-                      >
-                    </v-scroll-x-transition>
-                  </v-list-item>
-                </template>
-              </v-slide-y-transition>
-            </v-card>
-          </v-card-text>
-        </v-card>
+        <HomeViewTodo />
+        <!--
+  /**
+  Message
+   */
+ -->
         <v-card>
           <v-card-text>
             <h3
@@ -333,6 +253,8 @@
 </template>
 
 <script>
+import HomeViewTodo from "./HomeViewTodo.vue";
+
 const gradients = [
   ["#6c757d"],
   ["#6c757d"],
@@ -351,6 +273,9 @@ const gradients2 = [
 ];
 export default {
   name: "HomeView",
+  components: {
+    HomeViewTodo,
+  },
   data: () => ({
     fill: true,
     gradient: gradients[4],
@@ -366,17 +291,7 @@ export default {
     padding2: 0,
     value2: [1, 2, 5, 9, 5, 10, 3, 5, 1, 8, 2, 9, 4],
     width2: 4,
-    tasks: [
-      {
-        done: false,
-        text: "Check emails of Mr.Shah",
-      },
-      {
-        done: false,
-        text: "Give salary to employee",
-      },
-    ],
-    task: null,
+
     selected: [2],
     items: [
       {
@@ -414,25 +329,7 @@ export default {
       },
     ],
   }),
-  computed: {
-    completedTasks() {
-      return this.tasks.filter((task) => task.done).length;
-    },
-    progress() {
-      return (this.completedTasks / this.tasks.length) * 100;
-    },
-    remainingTasks() {
-      return this.tasks.length - this.completedTasks;
-    },
-  },
-  methods: {
-    create() {
-      this.tasks.push({
-        done: false,
-        text: this.task,
-      });
-      this.task = null;
-    },
-  },
+  computed: {},
+  methods: {},
 };
 </script>

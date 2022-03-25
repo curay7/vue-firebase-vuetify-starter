@@ -6,8 +6,18 @@ const DATABASE = "todo-list";
 
 export default new Vuex.Store({
   state: {
+    /**
+     * User only
+     */
     name: "",
     email: "",
+    uid: "",
+
+    todos: [],
+
+    /**
+     * Loading and animation
+     */
     loadings: {
       login: false,
       newTodo: false,
@@ -15,17 +25,21 @@ export default new Vuex.Store({
       getAllTodos: false,
       deletingTodo: false,
     },
-    uid: "",
     uncheckedTodos: [],
     markedTodos: [],
 
-    //Design
+    /**
+     * Design Config
+     */
     Sidebar_drawer: null,
     Customizer_drawer: false,
     SidebarColor: "white",
     SidebarBg: "",
   },
   mutations: {
+    setTodos(state, data) {
+      state.todos = data;
+    },
     setNewTodoLoading(state, data) {
       state.loadings.newTodo = data;
     },
@@ -130,6 +144,80 @@ export default new Vuex.Store({
             // Handle Errors here.
             commit("afterErrorAuth");
             reject(error.code);
+          });
+      });
+    },
+    todoSubmit({ commit }, payload) {
+      return new Promise((resolve) => {
+        commit("setNewTodoLoading", true);
+        firebase
+          .firestore()
+          .collection("todos")
+          .add(payload)
+          .then(() => {
+            commit("setNewTodoLoading", false);
+            resolve();
+          });
+      });
+    },
+    todoUpdate({ commit }, payload) {
+      return new Promise((resolve) => {
+        console.log("UPDATE!!!!");
+        console.log(payload.id);
+        commit("setNewTodoLoading", true);
+        firebase
+          .firestore()
+          .collection("todos")
+          .doc(payload.id)
+          .update(payload)
+          .then(() => {
+            resolve;
+          });
+      });
+    },
+    // async todoGetAll({ commit }) {
+    //   const todos = [];
+    //   const response = await firebase
+    //     .firestore()
+    //     .collection("todos")
+    //     .onSnapshot((querySnapshot) => {});
+
+    //   response.forEach((todo) => {
+    //     console.log(todo.id);
+    //     console.log(todo.data());
+    //     const todoObj = todo.data();
+    //     todoObj.id = todo.id;
+    //     todos.push(todoObj);
+    //   });
+
+    //   commit("setTodos", todos);
+    // },
+    async todoGetAll({ commit }) {
+      return new Promise((resolve) => {
+        commit("setAllTodosLoading", true);
+        let todoList = [];
+        firebase
+          .firestore()
+          .collection("todos")
+          .orderBy("createdAt")
+          .onSnapshot((res) => {
+            let querySnapshot = res.docChanges();
+            querySnapshot.forEach((todo) => {
+              if (todo.type === "added") {
+                todoList.push({
+                  text: todo.doc.data().text,
+                  done: todo.doc.data().done,
+                  id: todo.doc.id,
+                });
+              }
+              // todoList.push({
+              //   key: doc.id,
+              //   text: doc.data().text,
+              //   done: doc.data().done,
+              // });
+            });
+            commit("setTodos", todoList);
+            resolve();
           });
       });
     },
