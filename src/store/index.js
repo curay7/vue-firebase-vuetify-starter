@@ -205,6 +205,7 @@ export default new Vuex.Store({
             querySnapshot.forEach((todo) => {
               if (todo.type === "added") {
                 todoList.push({
+                  createdAt: todo.doc.data().createdAt,
                   text: todo.doc.data().text,
                   done: todo.doc.data().done,
                   id: todo.doc.id,

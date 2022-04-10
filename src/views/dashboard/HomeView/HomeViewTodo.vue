@@ -47,7 +47,7 @@
 
       <v-divider class="mb-4"></v-divider>
       <div></div>
-      <v-card v-if="todos.length > 0">
+      <!-- <v-card v-if="todos.length > 0">
         <v-slide-y-transition class="py-0" group>
           <template v-for="(todo, i) in todos">
             <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
@@ -80,19 +80,22 @@
           </template>
           <v-pagination v-model="todos" :length="todos"></v-pagination>
         </v-slide-y-transition>
-      </v-card>
-      <!-- <v-card v-if="todos.length > 0">
+      </v-card> -->
+      <v-card v-if="todos.length > 0">
         <template>
+          <div>
+            {{ todos[1] }}
+          </div>
           <v-data-table
             :headers="headers"
             :items="todos"
             :items-per-page="5"
-            :single-select="false"
+            :single-select="true"
             sort-by="createdAt"
             class="elevation-1"
           ></v-data-table>
         </template>
-      </v-card> -->
+      </v-card>
     </v-card-text>
   </v-card>
 </template>
@@ -103,6 +106,9 @@ import firebase from "firebase";
 export default {
   data() {
     return {
+      singleSelect: false,
+      selected: [],
+
       headers: [
         {
           align: "start",
@@ -153,7 +159,10 @@ export default {
       return this.todos.length - this.completedTasks;
     },
     completedTasks() {
-      return this.todos.filter((task) => task.done).length;
+      console.log("task");
+      return this.todos.filter((task) => {
+        task.done;
+      }).length;
     },
     ...mapState(["todos"]),
     // ...mapState({
