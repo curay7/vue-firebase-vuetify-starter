@@ -192,8 +192,6 @@ export default {
   methods: {
     //!table methods
     async editItem(item) {
-      console.log("edit");
-      console.log(item);
       this.editedIndex = this.todos.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
@@ -227,7 +225,9 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.todos[this.editedIndex], this.editedItem);
+        console.log("edit");
+        console.log(this.editedItem);
+        this.updateTodo(this.editedItem);
       } else {
         this.todos.push(this.editedItem);
       }
@@ -257,7 +257,11 @@ export default {
       console.log(passTodo);
       this.todoUpdate(passTodo);
     },
-    ...mapActions(useTodoStore, ["initialGetAllTodo", "createTodo"]),
+    ...mapActions(useTodoStore, [
+      "initialGetAllTodo",
+      "createTodo",
+      "updateTodo",
+    ]),
   },
   computed: {
     progress() {

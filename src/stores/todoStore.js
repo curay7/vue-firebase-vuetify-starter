@@ -16,6 +16,7 @@ export const useTodoStore = defineStore("useTodoStore", {
           .onSnapshot((res) => {
             let querySnapshot = res.docChanges();
             querySnapshot.forEach((todo) => {
+              console.log(todo.type);
               if (todo.type == "added" && todo.doc.data().createdAt != null) {
                 let date = todo.doc.data().createdAt.toDate();
 
@@ -36,7 +37,10 @@ export const useTodoStore = defineStore("useTodoStore", {
                 });
               }
 
-              if (todo.type === "modified") {
+              if (
+                todo.type === "modified" &&
+                this.todos.shift.id != todo.doc.data().id
+              ) {
                 let dateMod = todo.doc.data().createdAt.toDate();
 
                 var todayMod = dateMod
@@ -68,8 +72,28 @@ export const useTodoStore = defineStore("useTodoStore", {
           .collection("todos")
           .add(payload)
           .then(() => {
+            // let dateMod = payload.createdAt.toDate();
+
+            // var todayMod = dateMod
+            //   .toLocaleDateString("en-GB", {
+            //     day: "numeric",
+            //     month: "short",
+            //     year: "numeric",
+            //   })
+            //   .split(" ")
+            //   .join("-");
+            //payload.createdAt = todayMod;
+            // console.log(payload.createdAt);
+            // this.todos.unshift(payload);
             resolve();
           });
+      });
+    },
+    updateTodo(payload) {
+      firebase.firestore().collection("todos").doc(payload.id).update({
+        text: payload.text,
+        done: payload.done,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
     },
   },
