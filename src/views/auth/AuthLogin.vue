@@ -43,13 +43,20 @@
               <div
                 class="d-flex justify-space-between align-center mx-10 mb-16"
               >
-                <v-btn depressed outlined color="grey">
+                <v-btn
+                  depressed
+                  outlined
+                  color="grey"
+                  icon
+                  x-large
+                  @click="loginWithGoogle"
+                >
                   <v-icon color="red">fab fa-google</v-icon>
                 </v-btn>
-                <v-btn depressed outlined color="grey">
+                <v-btn depressed outlined color="grey" icon x-large>
                   <v-icon color="blue">fab fa-facebook-f</v-icon>
                 </v-btn>
-                <v-btn depressed outlined color="grey">
+                <v-btn depressed outlined color="grey" icon x-large>
                   <v-icon color="light-blue lighten-3">fab fa-twitter</v-icon>
                 </v-btn>
               </div>
@@ -78,8 +85,8 @@
 </template>
 
 <script>
-// import firebaseApp from "../../firebase";
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "pinia";
+import { userAuthStore } from "../../stores/authStore";
 
 export default {
   data: () => ({
@@ -149,11 +156,42 @@ export default {
       }
     },
 
-    ...mapActions(["createNewUserAccount", "signInUser"]),
+    loginWithGoogle() {
+      this.loginGoogle()
+        .then(() => {
+          const Toast = this.$swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", this.$swal.stopTimer);
+              toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: "Signed in successfully",
+          });
+          this.$router.push("/");
+        })
+        .catch((e) => {
+          console.log(e);
+          this.$swal.fire({
+            icon: "error",
+            title: "Invalid Credential",
+            text: "Please enter valid Credential. ",
+          });
+        });
+    },
+
+    ...mapActions(userAuthStore, ["loginGoogle", "signInUser"]),
   },
-  computed: mapState({
-    loginLoading: (state) => state.loadings.login,
-  }),
+  // computed: mapState({
+  //   loginLoading: (state) => state.loadings.login,
+  // }),
 };
 </script>
 <style scoped>
