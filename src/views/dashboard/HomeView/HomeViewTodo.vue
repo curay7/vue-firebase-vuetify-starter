@@ -89,10 +89,33 @@
           show-select
         >
           <template v-slot:[`item.actions`]="{ item }">
-            <v-icon small class="mr-2" @click="editItem(item)">
+            <v-menu top :offset-x="offset">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn v-bind="attrs" v-on="on" icon>
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+
+              <v-list>
+                <v-list-item>
+                  <v-btn text tile icon @click="editItem(item)">
+                    <v-icon small class="mr-2"> mdi-pencil </v-icon></v-btn
+                  >
+                </v-list-item>
+                <v-list-item>
+                  <v-btn text tile icon @click="deleteItem(item)">
+                    <v-icon small class="mr-2"> mdi-delete </v-icon></v-btn
+                  >
+                </v-list-item>
+              </v-list>
+            </v-menu>
+            <!-- <v-icon small class="mr-2" @click="editItem(item)">
               mdi-pencil
             </v-icon>
             <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+            <v-btn icon>
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn> -->
           </template>
 
           <template v-slot:top>
@@ -187,6 +210,7 @@ export default {
 
       selected: [],
       singleSelect: false,
+      offset: true,
     };
   },
   methods: {
@@ -203,7 +227,8 @@ export default {
     },
 
     deleteItemConfirm() {
-      this.todos.splice(this.editedIndex, 1);
+      let id = this.todos[this.editedIndex].id;
+      this.deleteTodo(id);
       this.closeDelete();
     },
 
@@ -225,8 +250,6 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        console.log("edit");
-        console.log(this.editedItem);
         this.updateTodo(this.editedItem);
       } else {
         this.todos.push(this.editedItem);
@@ -247,20 +270,19 @@ export default {
       this.task = null;
     },
     async updateTodo(todo) {
-      console.log(todo);
       let passTodo = await {
         id: todo.id,
         text: todo.text,
         done: todo.done,
         updateAt: firebase.firestore.FieldValue.serverTimestamp(),
       };
-      console.log(passTodo);
       this.todoUpdate(passTodo);
     },
     ...mapActions(useTodoStore, [
       "initialGetAllTodo",
       "createTodo",
       "updateTodo",
+      "deleteTodo",
     ]),
   },
   computed: {
@@ -271,7 +293,6 @@ export default {
       return this.todos.length - this.completedTasks;
     },
     completedTasks() {
-      console.log("task");
       return this.todos.filter((task) => {
         task.done;
       }).length;

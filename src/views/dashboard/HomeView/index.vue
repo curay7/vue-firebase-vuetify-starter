@@ -106,7 +106,7 @@
           </v-card-text>
         </v-card>
       </v-col> -->
-      <v-col cols="12" lg="4">
+      <v-col cols="12" lg="6">
         <!-- <v-card class="position-relative profile-card mb-7">
           <v-card-text class="pa-5">
             <div class="text-center">
