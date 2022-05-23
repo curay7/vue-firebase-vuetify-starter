@@ -47,40 +47,6 @@
 
       <v-divider class="mb-4"></v-divider>
       <div></div>
-      <!-- <v-card v-if="todos.length > 0">
-        <v-slide-y-transition class="py-0" group>
-          <template v-for="(todo, i) in todos">
-            <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
-
-            <v-list-item :key="`${i}-${todo.text}`">
-              <v-list-item-action>
-                <v-checkbox
-                  v-model="todo.done"
-                  :color="(todo.done && 'grey') || 'primary'"
-                >
-                  <template v-slot:label>
-                    <div
-                      :class="
-                        (todo.done && 'grey--text') ||
-                        'blue-grey--text text--darken-2'
-                      "
-                      class="ml-4 text-truncate"
-                      v-text="todo.text"
-                    ></div>
-                  </template>
-                </v-checkbox>
-              </v-list-item-action>
-
-              <v-spacer></v-spacer>
-
-              <v-scroll-x-transition>
-                <v-icon v-if="todo.done" color="success">mdi-check</v-icon>
-              </v-scroll-x-transition>
-            </v-list-item>
-          </template>
-          <v-pagination v-model="todos" :length="todos"></v-pagination>
-        </v-slide-y-transition>
-      </v-card> -->
       <v-card v-if="todos.length > 0">
         <v-data-table
           :headers="headers"
@@ -109,13 +75,6 @@
                 </v-list-item>
               </v-list>
             </v-menu>
-            <!-- <v-icon small class="mr-2" @click="editItem(item)">
-              mdi-pencil
-            </v-icon>
-            <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-            <v-btn icon>
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn> -->
           </template>
 
           <template v-slot:top>
@@ -301,6 +260,7 @@ export default {
   },
 
   mounted() {
+    console.log("Test Mounted Bug in the first Load");
     this.initialGetAllTodo();
   },
 };

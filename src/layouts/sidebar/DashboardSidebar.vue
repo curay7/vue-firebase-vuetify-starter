@@ -58,6 +58,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { useTodoStore } from "../../stores/todoStore";
 import firebase from "../../firebase";
 
 export default {
@@ -134,6 +135,7 @@ export default {
               .auth()
               .signOut()
               .then(() => {
+                useTodoStore().todos = [];
                 this.$router.replace({
                   name: "login",
                 });

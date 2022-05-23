@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="down-top-padding">
     <v-row>
-      <!-- <v-col cols="12" lg="8">
+      <v-col cols="12" lg="8">
         <v-card>
           <v-card-text class="pa-5">
             <div class="d-sm-flex align-center">
@@ -51,8 +51,8 @@
             </div>
           </v-card-text>
         </v-card>
-      </v-col> -->
-      <!-- <v-col cols="12" lg="4">
+      </v-col>
+      <v-col cols="12" lg="4">
         <v-card>
           <v-card-text class="pa-5">
             <h3
@@ -105,9 +105,9 @@
             </div>
           </v-card-text>
         </v-card>
-      </v-col> -->
+      </v-col>
       <v-col cols="12" lg="6">
-        <!-- <v-card class="position-relative profile-card mb-7">
+        <v-card class="position-relative profile-card mb-7">
           <v-card-text class="pa-5">
             <div class="text-center">
               <img
@@ -157,9 +157,9 @@
               </v-row>
             </div>
           </v-card-text>
-        </v-card> -->
-        <HomeViewTodo />
-        <!-- 
+        </v-card>
+        <FirstPageTodo />
+
         <v-card>
           <v-card-text>
             <h3
@@ -210,9 +210,9 @@
               </v-list-item-group>
             </v-list>
           </v-card-text>
-        </v-card> -->
+        </v-card>
       </v-col>
-      <!-- <v-col cols="12" lg="8">
+      <v-col cols="12" lg="8">
         <v-card>
           <v-card-text class="pa-5">
             <h3
@@ -243,13 +243,13 @@
             </v-timeline>
           </v-card-text>
         </v-card>
-      </v-col> -->
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import HomeViewTodo from "./HomeViewTodo.vue";
+import FirstPageTodo from "./FirstPageTodo.vue";
 
 const gradients = [
   ["#6c757d"],
@@ -268,9 +268,9 @@ const gradients2 = [
   ["#1e88e5", "#1e88e5", "#1e88e5"],
 ];
 export default {
-  name: "HomeView",
+  name: "FirstPage",
   components: {
-    HomeViewTodo,
+    FirstPageTodo,
   },
   data: () => ({
     fill: true,
