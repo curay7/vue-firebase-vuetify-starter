@@ -59,6 +59,7 @@
 <script>
 import { mapState } from "vuex";
 import { useTodoStore } from "../../stores/todoStore";
+import { userStore } from "../../stores/userStore";
 import firebase from "../../firebase";
 
 export default {
@@ -76,36 +77,34 @@ export default {
         icon: "mdi-view-dashboard",
         to: "/dashboard/home",
       },
+      {
+        title: "Department",
+        icon: "mdi-table-column-width",
+        to: "/pages/tables-simple",
+      },
 
+      {
+        title: "Apply Person",
+        icon: "mdi-account-plus",
+        to: "/pages/createuser",
+      },
       {
         title: "Profile",
         icon: "mdi-account-circle",
         to: "/pages/profile",
       },
 
-      {
-        title: "Alerts",
-        icon: "mdi-alert",
-        to: "/pages/alerts",
-      },
+      // {
+      //   title: "Alerts",
+      //   icon: "mdi-alert",
+      //   to: "/pages/alerts",
+      // },
 
-      {
-        title: "Icons",
-        icon: "mdi-emoticon",
-        to: "/pages/icons",
-      },
-
-      {
-        title: "Basic Table",
-        icon: "mdi-table-column-width",
-        to: "/pages/tables-simple",
-      },
-
-      {
-        title: "Create",
-        icon: "mdi-account-plus",
-        to: "/pages/createuser",
-      },
+      // {
+      //   title: "Icons",
+      //   icon: "mdi-emoticon",
+      //   to: "/pages/icons",
+      // },
     ],
   }),
   computed: {
@@ -142,6 +141,7 @@ export default {
               .signOut()
               .then(() => {
                 useTodoStore().todos = [];
+                userStore().profiles = [];
                 this.$router.replace({
                   name: "login",
                 });

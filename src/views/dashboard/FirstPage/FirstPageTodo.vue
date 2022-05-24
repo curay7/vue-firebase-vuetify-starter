@@ -237,12 +237,7 @@ export default {
       };
       this.todoUpdate(passTodo);
     },
-    ...mapActions(useTodoStore, [
-      "initialGetAllTodo",
-      "createTodo",
-      "updateTodo",
-      "deleteTodo",
-    ]),
+    ...mapActions(useTodoStore, ["createTodo", "updateTodo", "deleteTodo"]),
   },
   computed: {
     progress() {
@@ -257,11 +252,6 @@ export default {
       }).length;
     },
     ...mapWritableState(useTodoStore, ["todos"]),
-  },
-
-  mounted() {
-    console.log("Test Mounted Bug in the first Load");
-    this.initialGetAllTodo();
   },
 };
 </script>

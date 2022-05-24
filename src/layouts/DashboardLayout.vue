@@ -16,6 +16,10 @@
 import DashboardHeader from "./header/DashboardHeader";
 import DashboardSidebar from "./sidebar/DashboardSidebar";
 //import DashboardFooter from "./footer/DashboardFooter";
+
+import { mapActions } from "pinia";
+import { useTodoStore } from "../stores/todoStore";
+import { userStore } from "../stores/userStore";
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "DashboardLayout",
@@ -40,6 +44,13 @@ export default {
     ...mapMutations({
       setCustomizerDrawer: "SET_CUSTOMIZER_DRAWER",
     }),
+
+    ...mapActions(useTodoStore, ["initialGetAllTodo"]),
+    ...mapActions(userStore, ["initialGetAllProfile"]),
+  },
+  created() {
+    this.initialGetAllTodo();
+    this.initialGetAllProfile();
   },
 };
 </script>

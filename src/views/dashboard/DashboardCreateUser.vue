@@ -92,7 +92,8 @@
 </template>
 
 <script>
-import { createUserStore } from "../../stores/createUserStore";
+import { userStore } from "../../stores/userStore";
+import firebase from "firebase";
 export default {
   name: "DashboardCreateUser",
 
@@ -109,7 +110,7 @@ export default {
       min: (v) => v.length >= 8 || "Min 8 characters",
       emailMatch: () => "The email and password you entered don't match",
     },
-    items: ["Electrician", "Traffic", "Water Distribution"],
+    items: ["Electrician", "Traffic Enforcer", "Water Distribution"],
   }),
   components: {},
   methods: {
@@ -119,9 +120,11 @@ export default {
         emailtext: this.emailtext,
         password: this.password,
         jobApplied: this.jobApplied,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
         userUid: "",
       };
-      createUserStore().createUserSaveProfile(payload);
+      userStore().createUserSaveProfile(payload);
     },
   },
 };
