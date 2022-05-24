@@ -13,6 +13,11 @@ const routes = [
     redirect: "dashboard/home",
     component: () => import("@/layouts/DashboardLayout"),
     children: [
+      {
+        name: "Create User",
+        path: "pages/createuser",
+        component: () => import("@/views/dashboard/DashboardCreateUser"),
+      },
       // Components
       {
         name: "Alerts",

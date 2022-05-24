@@ -100,6 +100,12 @@ export default {
         icon: "mdi-table-column-width",
         to: "/pages/tables-simple",
       },
+
+      {
+        title: "Create",
+        icon: "mdi-account-plus",
+        to: "/pages/createuser",
+      },
     ],
   }),
   computed: {
