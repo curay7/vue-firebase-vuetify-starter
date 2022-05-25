@@ -4,7 +4,7 @@
   <!-- ----------------------------------------------------------------------------- -->
   <div>
     <v-list-item-subtitle class="text-wrap">
-      Use <code>dark</code> prop to switch table to the dark theme.
+      <h1>{{ jobType }}</h1>
     </v-list-item-subtitle>
     <div class="mt-4">
       <v-simple-table dark>
@@ -16,9 +16,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in desserts" :key="item.name">
-              <td>{{ item.name }}</td>
-              <td>{{ item.calories }}</td>
+            <tr v-for="profile in profiles" :key="profile.userUid">
+              <td>{{ profile.userName }}</td>
+              <td>{{ profile.createdAt }}</td>
             </tr>
           </tbody>
         </template>
@@ -30,50 +30,59 @@
 <script>
 export default {
   name: "TableSimpleDarktheme",
-
-  data: () => ({
-    desserts: [
-      {
-        name: "Frozen Yogurt",
-        calories: 159,
-      },
-      {
-        name: "Ice cream sandwich",
-        calories: 237,
-      },
-      {
-        name: "Eclair",
-        calories: 262,
-      },
-      {
-        name: "Cupcake",
-        calories: 305,
-      },
-      {
-        name: "Gingerbread",
-        calories: 356,
-      },
-      {
-        name: "Jelly bean",
-        calories: 375,
-      },
-      {
-        name: "Lollipop",
-        calories: 392,
-      },
-      {
-        name: "Honeycomb",
-        calories: 408,
-      },
-      {
-        name: "Donut",
-        calories: 452,
-      },
-      {
-        name: "KitKat",
-        calories: 518,
-      },
-    ],
-  }),
+  props: {
+    jobType: {
+      type: String,
+      required: true,
+    },
+    profiles: {
+      type: Array,
+      required: true,
+    },
+  },
+  // data: () => ({
+  //   desserts: [
+  //     {
+  //       name: "Frozen Yogurt",
+  //       calories: 159,
+  //     },
+  //     {
+  //       name: "Ice cream sandwich",
+  //       calories: 237,
+  //     },
+  //     {
+  //       name: "Eclair",
+  //       calories: 262,
+  //     },
+  //     {
+  //       name: "Cupcake",
+  //       calories: 305,
+  //     },
+  //     {
+  //       name: "Gingerbread",
+  //       calories: 356,
+  //     },
+  //     {
+  //       name: "Jelly bean",
+  //       calories: 375,
+  //     },
+  //     {
+  //       name: "Lollipop",
+  //       calories: 392,
+  //     },
+  //     {
+  //       name: "Honeycomb",
+  //       calories: 408,
+  //     },
+  //     {
+  //       name: "Donut",
+  //       calories: 452,
+  //     },
+  //     {
+  //       name: "KitKat",
+  //       calories: 518,
+  //     },
+  //   ],
+  // }),
 };
 </script>
