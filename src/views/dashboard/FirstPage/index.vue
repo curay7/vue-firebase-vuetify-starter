@@ -87,10 +87,21 @@
               :items="profiles"
               :search="userSearch"
             >
-              <template slot="items" slot-scope="props">
-                <td>{{ props.item.firstName }} {{ props.item.lastName }}</td>
-                <td>{{ props.item.email }}</td>
-                <td>{{ props.item.company }}</td>
+              <template v-slot:item="{ item }">
+                <tr>
+                  <td>
+                    <v-list-item link @click="selectWorker(item)">
+                      {{ item.userName }}
+                    </v-list-item>
+                  </td>
+
+                  <td>{{ item.jobApplied }}</td>
+                  <td>
+                    <v-btn color="black" icon text x-large>
+                      <v-icon dark>mdi-dots-vertical</v-icon></v-btn
+                    >
+                  </td>
+                </tr>
               </template>
             </v-data-table>
           </v-card>
@@ -241,34 +252,27 @@
         </v-card>
       </v-col> -->
     </v-row>
+    <v-dialog
+      v-model="dialogSelectWorker"
+      max-width="80%"
+      transition="dialog-bottom-transition"
+    >
+      <ProfileInfo :profiles="profileSelect" />
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
 import FirstPageTodo from "./FirstPageTodo.vue";
+import ProfileInfo from "./ProfileInfo.vue";
 import { userStore } from "../../../stores/userStore";
 import { mapWritableState } from "pinia";
 
-const gradients = [
-  ["#6c757d"],
-  ["#6c757d"],
-  ["#6c757d", "#6c757d", "#6c757d"],
-  ["#21c1d6", "21c1d6"],
-  ["#21c1d6", "#21c1d6", "#21c1d6"],
-  ["#21c1d6", "#21c1d6", "#21c1d6"],
-];
-const gradients2 = [
-  ["#1e88e5"],
-  ["#1e88e5"],
-  ["#1e88e5", "#1e88e5", "#1e88e5"],
-  ["#1e88e5", "#1e88e5"],
-  ["#1e88e5", "#1e88e5", "#1e88e5"],
-  ["#1e88e5", "#1e88e5", "#1e88e5"],
-];
 export default {
   name: "FirstPage",
   components: {
     FirstPageTodo,
+    ProfileInfo,
   },
   data: () => ({
     fill: true,
@@ -289,6 +293,7 @@ export default {
     selected: [2],
     items,
 
+    //Table User
     drawer: true,
     mainMenu: {
       dashboard: "Dashboard",
@@ -301,6 +306,10 @@ export default {
     stats,
     userTableHeaders,
     userSearch: "",
+
+    //Dialog
+    profileSelect: [],
+    dialogSelectWorker: false,
   }),
   computed: {
     ...mapWritableState(userStore, ["profiles"]),
@@ -313,8 +322,29 @@ export default {
       const i = this.tasks.indexOf(task);
       this.tasks.splice(i, 1);
     },
+    selectWorker(worker) {
+      this.dialogSelectWorker = true;
+      this.profileSelect = worker;
+    },
   },
 };
+
+const gradients = [
+  ["#6c757d"],
+  ["#6c757d"],
+  ["#6c757d", "#6c757d", "#6c757d"],
+  ["#21c1d6", "21c1d6"],
+  ["#21c1d6", "#21c1d6", "#21c1d6"],
+  ["#21c1d6", "#21c1d6", "#21c1d6"],
+];
+const gradients2 = [
+  ["#1e88e5"],
+  ["#1e88e5"],
+  ["#1e88e5", "#1e88e5", "#1e88e5"],
+  ["#1e88e5", "#1e88e5"],
+  ["#1e88e5", "#1e88e5", "#1e88e5"],
+  ["#1e88e5", "#1e88e5", "#1e88e5"],
+];
 
 const items = [
   {
@@ -355,24 +385,24 @@ const stats = [
     label: "New leads this week",
   },
   {
-    number: "$8,312",
-    label: "Sales this week",
+    number: "₱8,312",
+    label: "Revenue this week",
   },
   {
     number: "233",
     label: "New leads this month",
   },
   {
-    number: "$24,748",
-    label: "Sales this month",
+    number: "₱24,748",
+    label: "Revenue this month",
   },
   {
-    number: "$24,748",
-    label: "Sales this month",
+    number: "₱24,748",
+    label: "Revenue this month",
   },
   {
-    number: "$24,748",
-    label: "Sales this month",
+    number: "₱24,748",
+    label: "Revenue this month",
   },
 ];
 
@@ -382,12 +412,12 @@ const userTableHeaders = [
     value: "userName",
   },
   {
-    text: "Email",
-    value: "emailtext",
-  },
-  {
     text: "Working",
     value: "jobApplied",
+  },
+  {
+    text: "Email",
+    value: "emailtext",
   },
 ];
 </script>

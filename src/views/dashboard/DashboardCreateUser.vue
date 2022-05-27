@@ -114,7 +114,7 @@ export default {
       "Electrician",
       "Traffic Enforcer",
       "Water Distribution",
-      ["Tourist Guide"],
+      "Tourist Guide",
     ],
   }),
   components: {},
