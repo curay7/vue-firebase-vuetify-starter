@@ -2,10 +2,19 @@
   <v-app-bar app clipped-left clipped-right color="blue" dark>
     <v-toolbar-title class="align-center d-flex">
       <span class="logo-icon">
-        <img src="../../assets/logo-light-icon.png" />
+        <img
+          src="../../assets/logo-light-icon.png"
+          height="100px"
+          width="100px"
+        />
       </span>
       <span class="logo-text ml-2">
-        <img src="../../assets/logo-light-text.png" class="mt-2" />
+        <img
+          src="../../assets/logo-light-text.png"
+          class="mt-2"
+          height="50px"
+          width="200px"
+        />
       </span>
     </v-toolbar-title>
     <v-app-bar-nav-icon

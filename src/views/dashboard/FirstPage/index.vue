@@ -18,55 +18,55 @@
           </v-layout>
         </v-flex>
         <v-flex md6="md6">
-          <v-card>
+          <v-card class="position-relative profile-card mb-7">
             <v-card-text class="pa-5">
-              <h3
-                class="title blue-grey--text text--darken-2 font-weight-regular"
-              >
-                Our Visitors
-              </h3>
-              <h6 class="subtitle-2 font-weight-light">
-                Different Devices Used to Visit
-              </h6>
-              <div class="pb-6">
-                <v-sparkline
-                  :fill="fill"
-                  height="145px"
-                  :gradient="gradient"
-                  :line-width="width"
-                  :padding="padding"
-                  :smooth="radius || false"
-                  :value="value"
-                  auto-draw
-                ></v-sparkline>
-              </div>
-              <div
-                class="d-flex align-center justify-center border-top pt-4 pb-2"
-              >
-                <div class="d-flex align-center px-3">
-                  <span class="info--text">
-                    <span class="overline">
-                      <i class="mdi mdi-brightness-1 mr-2"></i>
-                    </span>
-                    <span class="font-weight-regular">Mobile</span>
-                  </span>
-                </div>
-                <div class="d-flex align-center px-3">
-                  <span class="deep-purple--text text--lighten-1">
-                    <span class="overline">
-                      <i class="mdi mdi-brightness-1 mr-2"></i>
-                    </span>
-                    <span class="font-weight-regular">Desktop</span>
-                  </span>
-                </div>
-                <div class="d-flex align-center px-3">
-                  <span class="success--text">
-                    <span class="overline">
-                      <i class="mdi mdi-brightness-1 mr-2"></i>
-                    </span>
-                    <span class="font-weight-regular">Tablet</span>
-                  </span>
-                </div>
+              <div class="text-center">
+                <img
+                  src="https://randomuser.me/api/portraits/men/81.jpg"
+                  alt="user"
+                  class="rounded-circle"
+                  width="100"
+                />
+                <h2 class="font-weight-regular">George Ayuban</h2>
+                <v-btn
+                  color="deep-purple accent-2"
+                  x-large
+                  class="text-capitalize white--text mt-7"
+                  rounded
+                  >Mayor</v-btn
+                >
+                <v-row class="mt-6">
+                  <v-col cols="4">
+                    <h3
+                      class="mb-0 font-weight-light blue-grey--text text--darken-2"
+                    >
+                      1099
+                    </h3>
+                    <small class="blue-grey--text text--darken-2"
+                      >Project</small
+                    >
+                  </v-col>
+                  <v-col cols="4">
+                    <h3
+                      class="mb-0 font-weight-light blue-grey--text text--darken-2"
+                    >
+                      23,469
+                    </h3>
+                    <small class="blue-grey--text text--darken-2"
+                      >Helped People</small
+                    >
+                  </v-col>
+                  <v-col cols="4">
+                    <h3
+                      class="mb-0 font-weight-light blue-grey--text text--darken-2"
+                    >
+                      6035
+                    </h3>
+                    <small class="blue-grey--text text--darken-2"
+                      >Solve Issues</small
+                    >
+                  </v-col>
+                </v-row>
               </div>
             </v-card-text>
           </v-card>
@@ -114,54 +114,55 @@
         <FirstPageTodo />
       </v-col>
       <v-col cols="12" lg="6">
-        <v-card class="position-relative profile-card mb-7">
+        <v-card>
           <v-card-text class="pa-5">
-            <div class="text-center">
-              <img
-                src="https://randomuser.me/api/portraits/men/81.jpg"
-                alt="user"
-                class="rounded-circle"
-                width="100"
-              />
-              <h2 class="font-weight-regular">Angela Dominic</h2>
-              <h6 class="op-5 font-weight-regular">Web Designer & Developer</h6>
-              <v-btn
-                color="deep-purple accent-2"
-                x-large
-                class="text-capitalize white--text mt-7"
-                rounded
-                >Follow</v-btn
-              >
-              <v-row class="mt-6">
-                <v-col cols="4">
-                  <h3
-                    class="mb-0 font-weight-light blue-grey--text text--darken-2"
-                  >
-                    1099
-                  </h3>
-                  <small class="blue-grey--text text--darken-2">Articles</small>
-                </v-col>
-                <v-col cols="4">
-                  <h3
-                    class="mb-0 font-weight-light blue-grey--text text--darken-2"
-                  >
-                    23,469
-                  </h3>
-                  <small class="blue-grey--text text--darken-2"
-                    >Followers</small
-                  >
-                </v-col>
-                <v-col cols="4">
-                  <h3
-                    class="mb-0 font-weight-light blue-grey--text text--darken-2"
-                  >
-                    6035
-                  </h3>
-                  <small class="blue-grey--text text--darken-2"
-                    >Following</small
-                  >
-                </v-col>
-              </v-row>
+            <h3
+              class="title blue-grey--text text--darken-2 font-weight-regular"
+            >
+              Our Visitors
+            </h3>
+            <h6 class="subtitle-2 font-weight-light">
+              Different Devices Used to Visit
+            </h6>
+            <div class="pb-6">
+              <v-sparkline
+                :fill="fill"
+                height="145px"
+                :gradient="gradient"
+                :line-width="width"
+                :padding="padding"
+                :smooth="radius || false"
+                :value="value"
+                auto-draw
+              ></v-sparkline>
+            </div>
+            <div
+              class="d-flex align-center justify-center border-top pt-4 pb-2"
+            >
+              <div class="d-flex align-center px-3">
+                <span class="info--text">
+                  <span class="overline">
+                    <i class="mdi mdi-brightness-1 mr-2"></i>
+                  </span>
+                  <span class="font-weight-regular">Mobile</span>
+                </span>
+              </div>
+              <div class="d-flex align-center px-3">
+                <span class="deep-purple--text text--lighten-1">
+                  <span class="overline">
+                    <i class="mdi mdi-brightness-1 mr-2"></i>
+                  </span>
+                  <span class="font-weight-regular">Desktop</span>
+                </span>
+              </div>
+              <div class="d-flex align-center px-3">
+                <span class="success--text">
+                  <span class="overline">
+                    <i class="mdi mdi-brightness-1 mr-2"></i>
+                  </span>
+                  <span class="font-weight-regular">Tablet</span>
+                </span>
+              </div>
             </div>
           </v-card-text>
         </v-card>
@@ -382,27 +383,27 @@ const items = [
 const stats = [
   {
     number: "42",
-    label: "New leads this week",
+    label: "Project Ongoing",
   },
   {
-    number: "₱8,312",
-    label: "Revenue this week",
+    number: "7",
+    label: "Pending Issue",
   },
   {
-    number: "233",
-    label: "New leads this month",
+    number: "523",
+    label: "Needy People",
   },
   {
-    number: "₱24,748",
-    label: "Revenue this month",
+    number: "324",
+    label: "Citizen Request",
   },
   {
-    number: "₱24,748",
-    label: "Revenue this month",
+    number: "₱1,543,748",
+    label: "Tourist Revenue",
   },
   {
-    number: "₱24,748",
-    label: "Revenue this month",
+    number: "₱7,234,564",
+    label: "Municipality Savings",
   },
 ];
 
@@ -416,7 +417,7 @@ const userTableHeaders = [
     value: "jobApplied",
   },
   {
-    text: "Email",
+    text: "Action",
     value: "emailtext",
   },
 ];

@@ -14,14 +14,12 @@
       <!---USer Area -->
       <v-list-item two-line class="px-0">
         <v-list-item-avatar>
-          <img src="https://randomuser.me/api/portraits/men/81.jpg" />
+          <img src="https://i.ibb.co/pP2Kpg8/profile-Picture.jpg" />
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>Dohn Deo</v-list-item-title>
-          <v-list-item-subtitle class="caption"
-            >Webdesigner</v-list-item-subtitle
-          >
+          <v-list-item-title>Fedil Ayuban</v-list-item-title>
+          <v-list-item-subtitle class="caption">Admin</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <!---USer Area -->
